@@ -15,6 +15,7 @@ public class Driver{
 		System.out.println("should print false: ");
 		String old = one + "";
 		System.out.println(one.addWordHorizontal("oS",1,7));
+		System.out.println(one.addWordDiagonal("word",3,4));
 		if (old.equals(""+one)){
 			System.out.println("Yay you did not modify the WordSearch as you were supposed to!");
 		}else{
