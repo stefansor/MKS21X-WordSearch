@@ -102,4 +102,20 @@ public class WordSearch{
    }
    return false;
  }
+ public boolean addWordDiagonal(String word, int row, int col){
+   boolean overlapswell = true;
+   if(this.data[row].length - col >= word.length() && this.data.length - row >= word.length()){
+     for(int i = 0; i < word.length(); i++){
+       if(this.data[row + i][col + i] != word.charAt(i) && this.data[row + i][col + i] != '_'){
+         overlapswell = false;
+       }
+     }
+     if(overlapswell){
+       for(int j = 0; j < word.length(); j++){
+         this.data[row + j][col + j] = word.charAt(j);
+       }
+     }
+   }
+   return overlapswell;
+ }
 }
