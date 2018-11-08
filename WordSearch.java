@@ -34,7 +34,7 @@ public class WordSearch{
         for(int j = 0; j < this.data[i].length; j++){
           template = template + this.data[i][j] + " ";
         }
-        template = template + "\t";
+        template = template + "\n";
       }
       return template;
     }
@@ -53,18 +53,18 @@ public class WordSearch{
      */
     public boolean addWordHorizontal(String word,int row, int col){
       boolean overlapswell = true;
-      if(this.data[row].length - this.data[row][col] - 1 > word.length()){
+      if(this.data[row].length - col >= word.length()){
         for(int i = 0; i < word.length(); i++){
           if(this.data[row][i + col] == '_'){
             this.data[row][i + col] = word.charAt(i);
           }
           if(this.data[row][i + col] != word.charAt(i)){
-            this.data[row][i + col] = word.charAt(i);
             overlapswell = false;
           }
         }
+        return overlapswell;
       }
-      return overlapswell;
+      return false;
     }
 
    /**Attempts to add a given word to the specified position of the WordGrid.
@@ -80,17 +80,17 @@ public class WordSearch{
      */
     public boolean addWordVertical(String word,int row, int col){
       boolean overlapswell = true;
-      if(this.data.length - this.data[row][col] - 1 > word.length()){
+      if(this.data.length - row >= word.length()){
         for(int i = 0; i < word.length(); i++){
           if(this.data[row + i][col] == '_'){
             this.data[row + i][col] = word.charAt(i);
           }
           if(this.data[row + i][col] != word.charAt(i)){
-            this.data[row + i][col] =word.charAt(i);
             overlapswell = false;
           }
         }
+        return overlapswell;
       }
-      return overlapswell;
+      return false;
     }
 }
