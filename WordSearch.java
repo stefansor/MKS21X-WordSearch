@@ -52,16 +52,19 @@ public class WordSearch{
      * and the board is NOT modified.
      */
     public boolean addWordHorizontal(String word,int row, int col){
-      boolean overlapswell = false;
+      boolean overlapswell = true;
       if(this.data[row].length - this.data[row][col] - 1 > word.length()){
         for(int i = 0; i < word.length(); i++){
           if(this.data[row][i + col] == '_'){
             this.data[row][i + col] = word.charAt(i);
           }
-          if(this.data[row][i + col] == word.charAt(i))
+          if(this.data[row][i + col] != word.charAt(i)){
+            this.data[row][i + col] = word.charAt(i);
+            overlapswell = false;
+          }
         }
       }
-      return false;
+      return overlapswell;
     }
 
    /**Attempts to add a given word to the specified position of the WordGrid.
@@ -76,5 +79,18 @@ public class WordSearch{
      *and the board is NOT modified.
      */
     public boolean addWordVertical(String word,int row, int col){
+      boolean overlapswell = true;
+      if(this.data.length - this.data[row][col] - 1 > word.length()){
+        for(int i = 0; i < word.length(); i++){
+          if(this.data[row + i][col] == '_'){
+            this.data[row + i][col] = word.charAt(i);
+          }
+          if(this.data[row + i][col] != word.charAt(i)){
+            this.data[row + i][col] =word.charAt(i);
+            overlapswell = false;
+          }
+        }
+      }
+      return overlapswell;
     }
 }
