@@ -52,17 +52,16 @@ public class WordSearch{
      * and the board is NOT modified.
      */
     public boolean addWordHorizontal(String word,int row, int col){
-      boolean overlapswell = true;
       if(this.data[row].length - col >= word.length()){
         for(int i = 0; i < word.length(); i++){
-          if(this.data[row][i + col] == '_'){
-            this.data[row][i + col] = word.charAt(i);
-          }
-          if(this.data[row][i + col] != word.charAt(i)){
-            overlapswell = false;
+          if(this.data[row][col + i] != '_' || this.data[row][col + i] != word.charAt(i) ){
+            return false;
           }
         }
-        return overlapswell;
+        for(int j = 0; j < word.length(); j++){
+          this.data[row][col + j] = word.charAt(j);
+        }
+        return true;
       }
       return false;
     }
@@ -79,17 +78,16 @@ public class WordSearch{
      *and the board is NOT modified.
      */
     public boolean addWordVertical(String word,int row, int col){
-      boolean overlapswell = true;
       if(this.data.length - row >= word.length()){
         for(int i = 0; i < word.length(); i++){
-          if(this.data[row + i][col] == '_'){
-            this.data[row + i][col] = word.charAt(i);
-          }
-          if(this.data[row + i][col] != word.charAt(i)){
-            overlapswell = false;
+          if(this.data[row + i][col] != '_' || this.data[row + i][col] != word.charAt(i) ){
+            return false;
           }
         }
-        return overlapswell;
+        for(int j = 0; j < word.length(); j++){
+          this.data[row + j][col] = word.charAt(j);
+        }
+        return true;
       }
       return false;
     }
