@@ -1,6 +1,14 @@
+import java.util.Random;
+import java.util.Scanner;
+import java.util.ArrayList;
+import java.io.File;
+import java.io.FileNotFoundException;
 public class WordSearch{
     private char[][]data;
-
+    private int seed;
+    private Random randgen;
+    private ArrayList<String> wordsToAdd;
+    private ArrayList<String> wordsAdded;
     /**Initialize the grid to the size specified
      *and fill all of the positions with '_'
      *@param row is the starting height of the WordSearch
@@ -13,6 +21,28 @@ public class WordSearch{
           data[i][j] = '_';
         }
       }
+    }
+    public WordSearch( int rows, int cols, String fileName) throws FileNotFoundException{
+      data = new char[rows][cols];
+      for(int i = 0; i < data.length; i++){
+        for(int j = 0; j < data[i].length; j++){
+          data[i][j] = '_';
+        }
+      }
+      File f = new File(fileName);
+      Scanner in = new Scanner(f);
+      /*wordsToAdd = in.toUpperCase().split("\n");*/
+    }
+    public WordSearch( int rows, int cols, String fileName, int randSeed)throws FileNotFoundException{
+      data = new char[rows][cols];
+      for(int i = 0; i < data.length; i++){
+        for(int j = 0; j < data[i].length; j++){
+          data[i][j] = '_';
+        }
+      }
+      File f = new File(fileName);
+      Scanner in = new Scanner(f);
+      /*wordsToAdd = in.toUpperCase().split("\n");*/
     }
 
     /**Set all values in the WordSearch to underscores'_'*/
@@ -31,13 +61,46 @@ public class WordSearch{
     public String toString(){
       String template = "";
       for(int i = 0; i < this.data.length; i++){
+        template = template + "|";
         for(int j = 0; j < this.data[i].length; j++){
           template = template + this.data[i][j] + " ";
         }
-        template = template + "\n";
+        template = template + "| \n";
       }
+      String words = "";
+      for(int i = 0; i < this.wordsAdded.size(); i++){
+        if(i ==  this.wordsAdded.size() - 1){
+          words = words + this.wordsAdded.get(i);
+        }
+        else{
+          words = words + this.wordsAdded.get(i) + ",";
+        }
+      }
+      template = template + "\n Words: " + words;
       return template;
     }
+
+    private boolean addWord( String word, int r, int c, int rowIncrement, int colIncrement){
+      if(rowIncrement == 0 && colIncrement == 0){
+        return false;
+      }
+      try{
+        for(int i = 0; i < word.length(); i++){
+          if(this.data[r + rowIncrement * i][c + colIncrement * i] != word.charAt(i)
+          && this.data[r + rowIncrement * i][c + colIncrement * i] != '_'){
+            return false;
+          }
+        }
+      }
+      catch(IndexOutOfBoundsException e){
+        return false;
+      }
+      for(int j = 0; j < word.length(); j++){
+        this.data[r + rowIncrement * j][c + colIncrement * j] = word.charAt(j);
+      }
+      return true;
+    }
+
 
 
     /**Attempts to add a given word to the specified position of the WordGrid.
