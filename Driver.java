@@ -1,3 +1,8 @@
+import java.util.Random;
+import java.util.Scanner;
+import java.util.ArrayList;
+import java.io.File;
+import java.io.FileNotFoundException;
 public class Driver{
 	public static void main(String[] args){
 		WordSearch one = new WordSearch(10,10);
@@ -33,6 +38,7 @@ public class Driver{
 		System.out.println("attempting to add 'elloHay' vertically at (1,5)");
 		System.out.println("should print true: ");
 		System.out.println(one.addWordVertical("elloHay",1,5));
+		System.out.println(one.addWord("dance", 4, 4 , -1, -1));
 		System.out.println("should have the sixth column as: _ e l l o H a y _ _");
 		System.out.println(one);
 		System.out.println("*******************************");
@@ -46,5 +52,7 @@ public class Driver{
 			System.out.println("uh Oh you modified the WordSearch: ");
 			System.out.println(one);
 		}
+		/*WordSearch two = new WordSearch(10, 10, "words.txt");
+		System.out.println(two.wordsAdded.get(0));*/
 	}
 }
