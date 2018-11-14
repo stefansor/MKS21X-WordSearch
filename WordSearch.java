@@ -122,6 +122,32 @@ public class WordSearch{
 
 
 
+    public void addAllWords(){
+      String word = "";
+      for(int i = 0; i < this.wordsToAdd.size(); i++){
+        word = this.wordsToAdd.get(randgen.nextInt() % this.wordsToAdd.size());
+        int rowI = (randgen.nextInt() % 3) - 1;
+        int colI = (randgen.nextInt() % 3) - 1;
+        boolean added = false;
+        for(int j = 0; j < 1000; j++){
+          if(!added && this.addWord(word, randgen.nextInt() % this.data.length,
+          randgen.nextInt() % this.data[0].length, rowI, colI)){
+            added = true;
+          }
+        }
+      }
+    }
+
+
+
+
+
+
+
+
+
+
+
 
 
     /**Attempts to add a given word to the specified position of the WordGrid.
