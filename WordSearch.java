@@ -49,10 +49,12 @@ public class WordSearch{
         }
       }
       try{
-        File f = new File("Words.txt");
+        File f = new File("words.txt");
         Scanner in = new Scanner(f);
-        while(in.hasNextLine()){
-          String wor = in.nextLine();
+        wordsToAdd = new ArrayList<String>();
+        wordsAdded = new ArrayList<String>();
+        while(in.hasNext()){
+          String wor = in.next();
           wordsToAdd.add(wor);
         }
         addAllWords();
@@ -64,7 +66,7 @@ public class WordSearch{
     }
 
     /**Set all values in the WordSearch to underscores'_'*/
-    private void clear(){
+    public void clear(){
       for(int i = 0; i < this.data.length; i++){
         for(int j = 0; j < this.data[i].length; j++){
           this.data[i][j] = '_';
@@ -123,7 +125,7 @@ public class WordSearch{
 
     public void addAllWords(){
       for(int i = 0; i < this.wordsToAdd.size(); i++){
-        String word = wordsToAdd.get(randgen.nextInt() % wordsToAdd.size());
+        String word = this.wordsToAdd.get(randgen.nextInt() % this.wordsToAdd.size());
         int rowI = (randgen.nextInt() % 3) - 1;
         int colI = (randgen.nextInt() % 3) - 1;
         boolean added = false;
@@ -131,8 +133,8 @@ public class WordSearch{
           if(!added && addWord(word, randgen.nextInt() % this.data.length,
           randgen.nextInt() % this.data[0].length, rowI, colI)){
             added = true;
-            wordsToAdd.remove(word);
-            wordsAdded.add(word);
+            this.wordsToAdd.remove(word);
+            this.wordsAdded.add(word);
           }
         }
       }
