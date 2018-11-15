@@ -48,6 +48,7 @@ public class WordSearch{
           data[i][j] = '_';
         }
       }
+      randgen = new Random(10000);
       try{
         File f = new File("words.txt");
         Scanner in = new Scanner(f);
@@ -88,14 +89,14 @@ public class WordSearch{
         template = template + "| \n";
       }
       String words = "";
-      /*for(int i = 0; i < wordsAdded.size(); i++){
+      for(int i = 0; i < wordsAdded.size(); i++){
         if(i == wordsAdded.size() - 1){
           words = words + wordsAdded.get(i);
         }
         else{
-          words = words + wordsAdded.get(i) + ",";
+          words = words + wordsAdded.get(i) + ", ";
         }
-      }*/
+      }
       template = template + "\n Words: " + words;
       return template + "\n";
     }
@@ -124,12 +125,12 @@ public class WordSearch{
 
 
     public void addAllWords(){
-      for(int i = 0; i < this.wordsToAdd.size(); i++){
+      for(int x = 0; x < this.wordsToAdd.size(); x++){
         String word = this.wordsToAdd.get(randgen.nextInt() % this.wordsToAdd.size());
         int rowI = (randgen.nextInt() % 3) - 1;
         int colI = (randgen.nextInt() % 3) - 1;
         boolean added = false;
-        for(int j = 0; j < 1000; j++){
+        for(int y = 0; y < 1000; y++){
           if(!added && addWord(word, randgen.nextInt() % this.data.length,
           randgen.nextInt() % this.data[0].length, rowI, colI)){
             added = true;
