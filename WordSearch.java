@@ -24,10 +24,11 @@ public class WordSearch{
         }
         File f = new File(fileName);
         Scanner in = new Scanner(f);
-        while(in.hasNext()){
-          wordsToAdd.add(in.next());
+        while(in.hasNextLine()){
+          String wor = in.nextLine();
+          wordsToAdd.add(wor);
         }
-        this.addAllWords();
+        addAllWords();
         /*this.fillRandom(); -- fills in random letters need to write helper function*/
         /*if(answers){
           this.showAns(); -- also prints wordsearch with no random letters afterwards
@@ -41,19 +42,20 @@ public class WordSearch{
     }
     /* for testing addALLWords()*/
     public WordSearch(int r, int c){
+      data = new char[r][c];
+      for(int i = 0; i < data.length; i++){
+        for(int j = 0; j < data[i].length; j++){
+          data[i][j] = '_';
+        }
+      }
       try{
-        data = new char[r][c];
-        for(int i = 0; i < data.length; i++){
-          for(int j = 0; j < data[i].length; j++){
-            data[i][j] = '_';
-          }
-        }
-        File f = new File("words.txt");
+        File f = new File("Words.txt");
         Scanner in = new Scanner(f);
-        while(in.hasNext()){
-          wordsToAdd.add(in.next());
+        while(in.hasNextLine()){
+          String wor = in.nextLine();
+          wordsToAdd.add(wor);
         }
-        this.addAllWords();
+        addAllWords();
       }
       catch(FileNotFoundException e){
         System.out.println("nope");
@@ -84,16 +86,16 @@ public class WordSearch{
         template = template + "| \n";
       }
       String words = "";
-      /*for(int i = 0; i < this.wordsAdded.size(); i++){
-        if(i ==  this.wordsAdded.size() - 1){
-          words = words + this.wordsAdded.get(i);
+      /*for(int i = 0; i < wordsAdded.size(); i++){
+        if(i == wordsAdded.size() - 1){
+          words = words + wordsAdded.get(i);
         }
         else{
-          words = words + this.wordsAdded.get(i) + ",";
+          words = words + wordsAdded.get(i) + ",";
         }
       }*/
       template = template + "\n Words: " + words;
-      return template;
+      return template + "\n";
     }
 
     public boolean addWord( String word, int r, int c, int rowIncrement, int colIncrement){
@@ -101,6 +103,7 @@ public class WordSearch{
         return false;
       }
       try{
+        word = word.toUpperCase();
         for(int i = 0; i < word.length(); i++){
           if(this.data[r + rowIncrement * i][c + colIncrement * i] != word.charAt(i)
           && this.data[r + rowIncrement * i][c + colIncrement * i] != '_'){
@@ -118,43 +121,22 @@ public class WordSearch{
     }
 
 
-/*
     public void addAllWords(){
-      String word = "";
       for(int i = 0; i < this.wordsToAdd.size(); i++){
-        word = this.wordsToAdd.get(randgen.nextInt() % this.wordsToAdd.size());
+        String word = wordsToAdd.get(randgen.nextInt() % wordsToAdd.size());
         int rowI = (randgen.nextInt() % 3) - 1;
         int colI = (randgen.nextInt() % 3) - 1;
         boolean added = false;
         for(int j = 0; j < 1000; j++){
-          if(!added && this.addWord(word, randgen.nextInt() % this.data.length,
+          if(!added && addWord(word, randgen.nextInt() % this.data.length,
           randgen.nextInt() % this.data[0].length, rowI, colI)){
             added = true;
-            this.wordsToAdd.remove(word);
-            this.wordsAdded.add(word);
+            wordsToAdd.remove(word);
+            wordsAdded.add(word);
           }
         }
       }
     }
-*/
-public void addAllWords(){
-  String word = "";
-  Random ran = new Random();
-  for(int i = 0; i < this.wordsToAdd.size(); i++){
-    word = this.wordsToAdd.get(ran.nextInt() % this.wordsToAdd.size());
-    int rowI = (ran.nextInt() % 3) - 1;
-    int colI = (ran.nextInt() % 3) - 1;
-    boolean added = false;
-    for(int j = 0; j < 1000; j++){
-      if(!added && this.addWord(word, ran.nextInt() % this.data.length,
-      ran.nextInt() % this.data[0].length, rowI, colI)){
-        added = true;
-        this.wordsToAdd.remove(word);
-        this.wordsAdded.add(word);
-      }
-    }
-  }
-}
 
 
 }
