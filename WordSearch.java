@@ -5,10 +5,12 @@ import java.io.File;
 import java.io.FileNotFoundException;
 public class WordSearch{
     private char[][]data;
+    private char[][]ans;
     private int seed;
     private Random randgen;
     private ArrayList<String> wordsToAdd;
     public ArrayList<String> wordsAdded;
+    private boolean answers;
     /**Initialize the grid to the size specified
      *and fill all of the positions with '_'
      *@param row is the starting height of the WordSearch
@@ -43,12 +45,13 @@ public class WordSearch{
     /* for testing addALLWords()*/
     public WordSearch(int r, int c){
       data = new char[r][c];
+      answers = true;
       for(int i = 0; i < data.length; i++){
         for(int j = 0; j < data[i].length; j++){
           data[i][j] = '_';
         }
       }
-      randgen = new Random(10000);
+      randgen = new Random();
       try{
         File f = new File("words.txt");
         Scanner in = new Scanner(f);
@@ -59,6 +62,8 @@ public class WordSearch{
           wordsToAdd.add(wor);
         }
         addAllWords();
+        ans = data;
+        this.fillRandom();
       }
       catch(FileNotFoundException e){
         System.out.println("nope");
@@ -75,12 +80,25 @@ public class WordSearch{
       }
     }
 
+    private void fillRandom(){
+      for(int i = 0; i < this.data.length; i++){
+        for(int j = 0; j < this.data[i].length; j++){
+          if(this.data[i][j] == '_'){
+            int a = 65;
+            char ad = (char)(a + Math.abs(randgen.nextInt() % 26));
+            this.data[i][j] = ad ;
+          }
+        }
+      }
+    }
+
     /**Each row is a new line, there is a space between each letter
      *@return a String with each character separated by spaces, and rows
      *separated by newlines.
      */
     public String toString(){
       String template = "";
+      String base = "";
       for(int i = 0; i < this.data.length; i++){
         template = template + "|";
         for(int j = 0; j < this.data[i].length; j++){
@@ -98,6 +116,16 @@ public class WordSearch{
         }
       }
       template = template + "\n Words: " + words;
+      for(int k = 0; k < this.ans.length; k++){
+        base = base + "|";
+        for(int l = 0; l < this.ans[k].length; l++){
+          template = template + this.ans[k][l] + " ";
+        }
+        base = base + "| \n";
+      }
+      if(this.answers){
+        template = template + base;
+      }
       return template + "\n";
     }
 
@@ -126,13 +154,13 @@ public class WordSearch{
 
     public void addAllWords(){
       for(int x = 0; x < this.wordsToAdd.size(); x++){
-        String word = this.wordsToAdd.get(randgen.nextInt() % this.wordsToAdd.size());
-        int rowI = (randgen.nextInt() % 3) - 1;
-        int colI = (randgen.nextInt() % 3) - 1;
+        String word = this.wordsToAdd.get(Math.abs(randgen.nextInt() % this.wordsToAdd.size()));
+        int rowI = (randgen.nextInt() % 2);
+        int colI = (randgen.nextInt() % 2);
         boolean added = false;
-        for(int y = 0; y < 1000; y++){
-          if(!added && addWord(word, randgen.nextInt() % this.data.length,
-          randgen.nextInt() % this.data[0].length, rowI, colI)){
+        for(int y = 0; y < 1000000; y++){
+          if(!added && addWord(word, Math.abs(randgen.nextInt() % this.data.length),
+          Math.abs(randgen.nextInt() % this.data[0].length), rowI, colI)){
             added = true;
             this.wordsToAdd.remove(word);
             this.wordsAdded.add(word);
