@@ -79,6 +79,11 @@ public class WordSearch{
         }
       }
     }
+    private viod addAns(){
+      if(answer){
+        for()
+      }
+    }
 
     private void fillRandom(){
       for(int i = 0; i < this.data.length; i++){
@@ -98,7 +103,7 @@ public class WordSearch{
      */
     public String toString(){
       String template = "";
-      String base = "";
+      String base = "Key: \n";
       for(int i = 0; i < this.data.length; i++){
         template = template + "|";
         for(int j = 0; j < this.data[i].length; j++){
@@ -116,16 +121,6 @@ public class WordSearch{
         }
       }
       template = template + "\n Words: " + words;
-      for(int k = 0; k < this.ans.length; k++){
-        base = base + "|";
-        for(int l = 0; l < this.ans[k].length; l++){
-          template = template + this.ans[k][l] + " ";
-        }
-        base = base + "| \n";
-      }
-      if(this.answers){
-        template = template + base;
-      }
       return template + "\n";
     }
 
