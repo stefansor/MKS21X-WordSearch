@@ -80,11 +80,6 @@ public class WordSearch{
         }
       }
     }
-    private viod addAns(){
-      if(answer){
-        for()
-      }
-    }
 
     private void fillRandom(){
       for(int i = 0; i < this.data.length; i++){
