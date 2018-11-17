@@ -45,10 +45,12 @@ public class WordSearch{
     /* for testing addALLWords()*/
     public WordSearch(int r, int c){
       data = new char[r][c];
+      ans = new char[r][c];
       answers = true;
-      for(int i = 0; i < data.length; i++){
-        for(int j = 0; j < data[i].length; j++){
-          data[i][j] = '_';
+      clear();
+      for(int i = 0; i < ans.length; i++){
+        for(int j = 0; j < ans[i].length; j++){
+          ans[i][j] = '_';
         }
       }
       randgen = new Random();
@@ -62,7 +64,6 @@ public class WordSearch{
           wordsToAdd.add(wor);
         }
         addAllWords();
-        ans = data;
         this.fillRandom();
       }
       catch(FileNotFoundException e){
@@ -97,8 +98,8 @@ public class WordSearch{
      *separated by newlines.
      */
     public String toString(){
-      String template = "";
-      String base = "";
+      String template = "\n";
+      String base = "\n\n\nKey: \n";
       for(int i = 0; i < this.data.length; i++){
         template = template + "|";
         for(int j = 0; j < this.data[i].length; j++){
@@ -119,7 +120,7 @@ public class WordSearch{
       for(int k = 0; k < this.ans.length; k++){
         base = base + "|";
         for(int l = 0; l < this.ans[k].length; l++){
-          template = template + this.ans[k][l] + " ";
+          base = base + this.ans[k][l] + " ";
         }
         base = base + "| \n";
       }
@@ -147,6 +148,7 @@ public class WordSearch{
       }
       for(int j = 0; j < word.length(); j++){
         this.data[r + rowIncrement * j][c + colIncrement * j] = word.charAt(j);
+        this.ans[r + rowIncrement * j][c + colIncrement * j] = word.charAt(j);
       }
       return true;
     }
