@@ -9,32 +9,33 @@ public class WordSearch{
     private int seed;
     private Random randgen;
     private ArrayList<String> wordsToAdd;
-    public ArrayList<String> wordsAdded;
+    private ArrayList<String> wordsAdded;
     private boolean answers;
     /**Initialize the grid to the size specified
      *and fill all of the positions with '_'
      *@param row is the starting height of the WordSearch
      *@param col is the starting width of the WordSearch
      */
-    public WordSearch( int rows, int cols, String fileName, int seed, boolean answers){
+    public WordSearch( int rows, int cols, String fileName, int seed, String answers){
       try{
         data = new char[rows][cols];
-        for(int i = 0; i < data.length; i++){
-          for(int j = 0; j < data[i].length; j++){
-            data[i][j] = '_';
+        ans = new char[rows][cols];
+        clear();
+        for(int i = 0; i < ans.length; i++){
+          for(int j = 0; j < ans[i].length; j++){
+            ans[i][j] = '_';
           }
         }
+        wordsToAdd = new ArrayList<String>();
+        wordsAdded = new ArrayList<String>();
         File f = new File(fileName);
         Scanner in = new Scanner(f);
-        while(in.hasNextLine()){
-          String wor = in.nextLine();
+        while(in.hasNext()){
+          String wor = in.next();
           wordsToAdd.add(wor);
         }
         addAllWords();
-        /*this.fillRandom(); -- fills in random letters need to write helper function*/
-        /*if(answers){
-          this.showAns(); -- also prints wordsearch with no random letters afterwards
-        }*/
+        this.fillRandom();
         randgen = new Random(seed);
       }
       catch(FileNotFoundException e){
@@ -42,6 +43,27 @@ public class WordSearch{
         System.exit(1);
       }
     }
+
+
+
+    public static void main(String[] args){
+      if(args.length < 3){
+        System.out.println("must input a number of rows and columns as well as an existing file");
+        System.exit(1);
+      }
+      if(args.length == 3){
+        System.out.println(args[2]);
+        System.out.println((int)(Math.random() * 1000));
+        System.out.println("answers");
+        WordSearch one = new WordSearch(Integer.parseInt(args[0]), Integer.parseInt(args[1]),
+        args[2], (int)(Math.random() * 1000), "answers");
+        one.toString();
+      }
+    }
+
+
+
+
     /* for testing addALLWords()*/
     public WordSearch(int r, int c){
       data = new char[r][c];
