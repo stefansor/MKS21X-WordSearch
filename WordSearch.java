@@ -16,68 +16,22 @@ public class WordSearch{
      *@param row is the starting height of the WordSearch
      *@param col is the starting width of the WordSearch
      */
-    public WordSearch( int rows, int cols, String fileName, int seed, String answers){
-      try{
-        data = new char[rows][cols];
-        ans = new char[rows][cols];
-        clear();
-        for(int i = 0; i < ans.length; i++){
-          for(int j = 0; j < ans[i].length; j++){
-            ans[i][j] = '_';
-          }
-        }
-        wordsToAdd = new ArrayList<String>();
-        wordsAdded = new ArrayList<String>();
-        File f = new File(fileName);
-        Scanner in = new Scanner(f);
-        while(in.hasNext()){
-          String wor = in.next();
-          wordsToAdd.add(wor);
-        }
-        addAllWords();
-        this.fillRandom();
-        randgen = new Random(seed);
+    public WordSearch( int rows, int cols, String fileName, int seed, String g){
+      data = new char[rows][cols];
+      ans = new char[rows][cols];
+      answers = false;
+      if(g.equals("key") || g.equals("answers")){
+          answers = true;
       }
-      catch(FileNotFoundException e){
-        System.out.println("Must input an existing text file");
-        System.exit(1);
-      }
-    }
-
-
-
-    public static void main(String[] args){
-      if(args.length < 3){
-        System.out.println("must input a number of rows and columns as well as an existing file");
-        System.exit(1);
-      }
-      if(args.length == 3){
-        System.out.println(args[2]);
-        System.out.println((int)(Math.random() * 1000));
-        System.out.println("answers");
-        WordSearch one = new WordSearch(Integer.parseInt(args[0]), Integer.parseInt(args[1]),
-        args[2], (int)(Math.random() * 1000), "answers");
-        one.toString();
-      }
-    }
-
-
-
-
-    /* for testing addALLWords()*/
-    public WordSearch(int r, int c){
-      data = new char[r][c];
-      ans = new char[r][c];
-      answers = true;
       clear();
       for(int i = 0; i < ans.length; i++){
         for(int j = 0; j < ans[i].length; j++){
           ans[i][j] = '_';
         }
       }
-      randgen = new Random();
+      randgen = new Random(seed);
       try{
-        File f = new File("words.txt");
+        File f = new File(fileName);
         Scanner in = new Scanner(f);
         wordsToAdd = new ArrayList<String>();
         wordsAdded = new ArrayList<String>();
@@ -93,6 +47,42 @@ public class WordSearch{
         System.exit(1);
       }
     }
+
+
+
+    public static void main(String[] args){
+      if(args.length < 3){
+        System.out.println("must input a number of rows and columns as well as an existing file");
+        System.exit(1);
+      }
+      if(args.length == 3){
+        int a = Integer.parseInt(args[0]);
+        int b = Integer.parseInt(args[1]);
+        String c = args[2];
+        int d = (int)(Math.random() * 1000000);
+        WordSearch yes = new WordSearch(a,b,c,d,"yr");
+        System.out.println(yes);
+      }
+      if(args.length == 4){
+        int a = Integer.parseInt(args[0]);
+        int b = Integer.parseInt(args[1]);
+        String c = args[2];
+        int d = Integer.parseInt(args[3]);
+        WordSearch yeah = new WordSearch(a,b,c,d, "yrrr");
+        System.out.println(yeah);
+      }
+      if(args.length == 5){
+        int a = Integer.parseInt(args[0]);
+        int b = Integer.parseInt(args[1]);
+        String c = args[2];
+        int d = Integer.parseInt(args[3]);
+        String e = args[4];
+        WordSearch ohyeah = new WordSearch(a,b,c,d,e);
+        System.out.println(ohyeah);
+      }
+    }
+
+
 
     /**Set all values in the WordSearch to underscores'_'*/
     public void clear(){
@@ -144,12 +134,12 @@ public class WordSearch{
         for(int l = 0; l < this.ans[k].length; l++){
           base = base + this.ans[k][l] + " ";
         }
-        base = base + "| \n";
+        base = base + "| \n" + words + "\n" + "Seed: "+  this.seed + "\n";
       }
       if(this.answers){
-        template = template + base;
+        return base;
       }
-      return template + "\n";
+      return template + "\n" + "Seed: " + this.seed +"\n";
     }
 
     public boolean addWord( String word, int r, int c, int rowIncrement, int colIncrement){
