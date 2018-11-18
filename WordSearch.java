@@ -16,7 +16,8 @@ public class WordSearch{
      *@param row is the starting height of the WordSearch
      *@param col is the starting width of the WordSearch
      */
-    public WordSearch( int rows, int cols, String fileName, int seed, String g){
+    public WordSearch( int rows, int cols, String fileName, int randseed, String g){
+      seed = randseed;
       data = new char[rows][cols];
       ans = new char[rows][cols];
       answers = false;
@@ -43,7 +44,7 @@ public class WordSearch{
         this.fillRandom();
       }
       catch(FileNotFoundException e){
-        System.out.println("nope");
+        System.out.println("Must input a file that exists, your file was not found");
         System.exit(1);
       }
     }
@@ -51,34 +52,65 @@ public class WordSearch{
 
 
     public static void main(String[] args){
+      String directions = "Please input an integer number of rows, an integer number of columns, and at least a valid file. You can also input a a seed between 0 and 10000 inclusive and ask only for the answers by typing key or answers at the end. Make sure the file exists and that the dimensions of the puzzle are not negative.";
       if(args.length < 3){
-        System.out.println("must input a number of rows and columns as well as an existing file");
+        System.out.println(directions);
         System.exit(1);
       }
       if(args.length == 3){
-        int a = Integer.parseInt(args[0]);
-        int b = Integer.parseInt(args[1]);
-        String c = args[2];
-        int d = (int)(Math.random() * 1000000);
-        WordSearch yes = new WordSearch(a,b,c,d,"yr");
-        System.out.println(yes);
+        try{
+          int a = Integer.parseInt(args[0]);
+          int b = Integer.parseInt(args[1]);
+          String c = args[2];
+          int d = (int)(Math.random() * 10000);
+          WordSearch yes = new WordSearch(a,b,c,d,"yr");
+          System.out.println(yes);
+        }
+        catch(NumberFormatException e){
+          System.out.println(directions);
+          System.exit(1);
+        }
+        catch(NegativeArraySizeException e){
+          System.out.println(directions);
+          System.exit(1);
+        }
       }
       if(args.length == 4){
-        int a = Integer.parseInt(args[0]);
-        int b = Integer.parseInt(args[1]);
-        String c = args[2];
-        int d = Integer.parseInt(args[3]);
-        WordSearch yeah = new WordSearch(a,b,c,d, "yrrr");
-        System.out.println(yeah);
+        try{
+          int a = Integer.parseInt(args[0]);
+          int b = Integer.parseInt(args[1]);
+          String c = args[2];
+          int d = Integer.parseInt(args[3]);
+          WordSearch yeah = new WordSearch(a,b,c,d, "yrrr");
+          System.out.println(yeah);
+        }
+        catch(NumberFormatException e){
+          System.out.println(directions);
+          System.exit(1);
+        }
+        catch(NegativeArraySizeException e){
+          System.out.println(directions);
+          System.exit(1);
+        }
       }
       if(args.length == 5){
-        int a = Integer.parseInt(args[0]);
-        int b = Integer.parseInt(args[1]);
-        String c = args[2];
-        int d = Integer.parseInt(args[3]);
-        String e = args[4];
-        WordSearch ohyeah = new WordSearch(a,b,c,d,e);
-        System.out.println(ohyeah);
+        try{
+          int a = Integer.parseInt(args[0]);
+          int b = Integer.parseInt(args[1]);
+          String c = args[2];
+          int d = Integer.parseInt(args[3]);
+          String e = args[4];
+          WordSearch ohyeah = new WordSearch(a,b,c,d,e);
+          System.out.println(ohyeah);
+        }
+        catch(NumberFormatException e){
+          System.out.println(directions);
+          System.exit(1);
+        }
+        catch(NegativeArraySizeException e){
+          System.out.println(directions);
+          System.exit(1);
+        }
       }
     }
 
