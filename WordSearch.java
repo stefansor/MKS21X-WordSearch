@@ -18,16 +18,20 @@ public class WordSearch{
      */
     public WordSearch( int rows, int cols, String fileName, int randseed, String g){
       seed = randseed;
+      if(seed > 10000){
+        System.out.println("Seed must be less than 10000");
+        System.exit(1);
+      }
       data = new char[rows][cols];
       ans = new char[rows][cols];
       answers = false;
-      if(g.equals("key") || g.equals("answers")){
+      if(g.equals("key")){
           answers = true;
       }
       clear();
       for(int i = 0; i < ans.length; i++){
         for(int j = 0; j < ans[i].length; j++){
-          ans[i][j] = '_';
+          ans[i][j] = ' ';
         }
       }
       randgen = new Random(seed);
@@ -166,8 +170,9 @@ public class WordSearch{
         for(int l = 0; l < this.ans[k].length; l++){
           base = base + this.ans[k][l] + " ";
         }
-        base = base + "| \n" + words + "\n" + "Seed: "+  this.seed + "\n";
+        base = base + "| \n";
       }
+      base = base + "\n" + "Seed: "+ seed + "\nWords: " + words;
       if(this.answers){
         return base;
       }
@@ -204,7 +209,7 @@ public class WordSearch{
         int rowI = (randgen.nextInt() % 2);
         int colI = (randgen.nextInt() % 2);
         boolean added = false;
-        for(int y = 0; y < 1000000; y++){
+        for(int y = 0; y < 100000000; y++){
           if(!added && addWord(word, Math.abs(randgen.nextInt() % this.data.length),
           Math.abs(randgen.nextInt() % this.data[0].length), rowI, colI)){
             added = true;
